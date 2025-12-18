@@ -18,7 +18,7 @@ export function Header() {
       {/* Left side - Welcome message */}
       <div className="ml-12 lg:ml-0">
         <p className="text-xs text-muted-foreground font-medium">{today}</p>
-        <h1 className="text-xl font-semibold text-foreground mt-0.5">Welcome Back, Ali !</h1>
+        <h1 className="text-xl font-semibold text-foreground mt-0.5">Welcome Back, Ali!</h1>
       </div>
 
       {/* Right side - Actions */}

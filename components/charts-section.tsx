@@ -1,5 +1,6 @@
 "use client"
 
+import { useId } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
@@ -24,6 +25,8 @@ const platformData = [
 ]
 
 export function ChartsSection() {
+  const engagementGradientId = useId()
+
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
       {/* Engagement Analytics - Takes 2 columns */}
@@ -89,7 +92,7 @@ export function ChartsSection() {
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={engagementData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                 <defs>
-                  <linearGradient id="engagementGradient" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id={engagementGradientId} x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#f97316" stopOpacity={0.15} />
                     <stop offset="100%" stopColor="#f97316" stopOpacity={0} />
                   </linearGradient>
@@ -125,7 +128,7 @@ export function ChartsSection() {
                   dataKey="engagement"
                   stroke="#f97316"
                   strokeWidth={2.5}
-                  fill="url(#engagementGradient)"
+                  fill={`url(#${engagementGradientId})`}
                   dot={false}
                   activeDot={{ r: 5, fill: "#f97316", strokeWidth: 2, stroke: "#fff" }}
                 />

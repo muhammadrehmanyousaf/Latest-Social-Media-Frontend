@@ -32,7 +32,7 @@ const mainMenuItems = [
   { icon: Calendar, label: "Schedule", href: "/schedule" },
   { icon: CalendarClock, label: "Bulk Schedule", href: "/bulk-schedule" },
   { icon: Layers, label: "Templates", href: "/templates" },
-  { icon: Share2, label: "Social Channels", href: "/social-channels" },
+  { icon: Share2, label: "Social Channels", href: "/channels" },
 ]
 
 const moreMenuItems = [
@@ -202,17 +202,17 @@ export function Sidebar() {
         <div className="p-3 border-t border-sidebar-border shrink-0">
           <div className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-muted/60 transition-colors cursor-pointer">
             <Avatar className="w-10 h-10 border-2 border-primary/20">
-              <AvatarImage src="/professional-man-avatar.png" />
-              <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">JD</AvatarFallback>
+              <AvatarImage src="/professional-man-portrait.png" />
+              <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">AS</AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <p className="text-sm font-semibold text-foreground truncate">Nanda</p>
+                <p className="text-sm font-semibold text-foreground truncate">Ali Smith</p>
                 <span className="px-1.5 py-0.5 text-[10px] font-semibold bg-primary/15 text-primary rounded-md">
                   Admin
                 </span>
               </div>
-              <p className="text-xs text-muted-foreground truncate">nanda@example.com</p>
+              <p className="text-xs text-muted-foreground truncate">ali@example.com</p>
             </div>
             <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
           </div>
