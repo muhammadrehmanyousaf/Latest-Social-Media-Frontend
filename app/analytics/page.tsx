@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { usePageHeader } from "@/components/page-context"
+import { BarChart3 } from "lucide-react"
 import { AnalyticsHeader } from "@/components/analytics/analytics-header"
 import { OverviewStats } from "@/components/analytics/overview-stats"
 import { PerformanceCharts } from "@/components/analytics/performance-charts"
@@ -220,6 +221,12 @@ const generateHeatmapData = (): HeatmapData[] => {
 }
 
 export default function AnalyticsPage() {
+  usePageHeader({
+    title: "Analytics",
+    icon: BarChart3,
+    subtitle: "Track your performance metrics",
+  })
+
   const [activeTab, setActiveTab] = useState<ViewTab>("overview")
   const [dateRange, setDateRange] = useState<DateRange>("30d")
   const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>([])
@@ -249,10 +256,8 @@ export default function AnalyticsPage() {
     : mockChannelMetrics
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      <main className="flex-1 flex flex-col min-w-0">
-        <AnalyticsHeader
+    <main className="flex-1 flex flex-col min-w-0">
+      <AnalyticsHeader
           activeTab={activeTab}
           onTabChange={setActiveTab}
           dateRange={dateRange}
@@ -315,7 +320,6 @@ export default function AnalyticsPage() {
             </div>
           )}
         </div>
-      </main>
-    </div>
+    </main>
   )
 }

@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { usePageHeader } from "@/components/page-context"
+import { Layers } from "lucide-react"
 import { BulkScheduleHeader } from "@/components/bulk-schedule/bulk-schedule-header"
 import { BulkUploadZone } from "@/components/bulk-schedule/bulk-upload-zone"
 import { BulkPostEditor } from "@/components/bulk-schedule/bulk-post-editor"
@@ -65,6 +66,12 @@ const platformLimits: Record<Platform, number> = {
 }
 
 export default function BulkSchedulePage() {
+  usePageHeader({
+    title: "Bulk Schedule",
+    subtitle: "Schedule multiple posts at once",
+    icon: Layers,
+  })
+
   const [activeTab, setActiveTab] = useState<ViewTab>("editor")
   const [posts, setPosts] = useState<BulkPost[]>([])
   const [selectedPosts, setSelectedPosts] = useState<string[]>([])
@@ -261,10 +268,8 @@ export default function BulkSchedulePage() {
   const errorCount = posts.filter((p) => p.errors.length > 0).length
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      <main className="flex-1 flex flex-col min-w-0">
-        <BulkScheduleHeader
+    <div className="flex-1 flex flex-col min-w-0">
+      <BulkScheduleHeader
           activeTab={activeTab}
           onTabChange={setActiveTab}
           totalPosts={posts.length}
@@ -328,7 +333,6 @@ export default function BulkSchedulePage() {
             />
           )}
         </div>
-      </main>
     </div>
   )
 }

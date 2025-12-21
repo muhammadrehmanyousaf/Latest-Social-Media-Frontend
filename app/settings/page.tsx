@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { usePageHeader } from "@/components/page-context"
+import { Settings } from "lucide-react"
 import { SettingsSidebar } from "@/components/settings/settings-sidebar"
 import { ProfileSettings } from "@/components/settings/profile-settings"
 import { AppearanceSettings } from "@/components/settings/appearance-settings"
@@ -255,6 +256,12 @@ const mockContentDefaults: ContentDefaults = {
 }
 
 export default function SettingsPage() {
+  usePageHeader({
+    title: "Settings",
+    subtitle: "Manage your account",
+    icon: Settings,
+  })
+
   const [activeSection, setActiveSection] = useState<SettingsSection>("profile")
   const [profile, setProfile] = useState<UserProfile>(mockProfile)
   const [theme, setTheme] = useState<Theme>("system")
@@ -291,9 +298,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      <main className="flex-1 flex min-w-0">
+    <div className="flex-1 flex min-w-0">
         <SettingsSidebar
           activeSection={activeSection}
           onSectionChange={setActiveSection}
@@ -303,7 +308,6 @@ export default function SettingsPage() {
             {renderContent()}
           </div>
         </div>
-      </main>
     </div>
   )
 }

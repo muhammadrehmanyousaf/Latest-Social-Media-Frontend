@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { usePageHeader } from "@/components/page-context"
+import { PenSquare } from "lucide-react"
 import { CreatePostHeader } from "@/components/create-post/header"
 import { PlatformSelector } from "@/components/create-post/platform-selector"
 import { PostEditor } from "@/components/create-post/post-editor"
@@ -17,6 +18,12 @@ export interface PostContent {
 }
 
 export default function CreatePostPage() {
+  usePageHeader({
+    title: "Create Post",
+    icon: PenSquare,
+    subtitle: "Compose and schedule your content",
+  })
+
   const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>(["instagram", "linkedin"])
   const [activePlatform, setActivePlatform] = useState<Platform>("instagram")
   const [syncContent, setSyncContent] = useState(true)
@@ -66,40 +73,37 @@ export default function CreatePostPage() {
   }
 
   return (
-    <div className="flex h-screen bg-muted/30">
-      <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <CreatePostHeader selectedTags={selectedTags} />
+    <>
+      <CreatePostHeader selectedTags={selectedTags} />
 
-        <div className="flex-1 flex overflow-hidden">
-          {/* Left Panel - Editor */}
-          <div className="flex-1 flex flex-col overflow-hidden border-r border-border">
-            {/* Platform Selector */}
-            <PlatformSelector
-              selectedPlatforms={selectedPlatforms}
-              activePlatform={activePlatform}
-              onTogglePlatform={togglePlatform}
-              onSetActivePlatform={setActivePlatform}
-              syncContent={syncContent}
-              onToggleSync={() => setSyncContent(!syncContent)}
-            />
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left Panel - Editor */}
+        <div className="flex-1 flex flex-col overflow-hidden border-r border-border">
+          {/* Platform Selector */}
+          <PlatformSelector
+            selectedPlatforms={selectedPlatforms}
+            activePlatform={activePlatform}
+            onTogglePlatform={togglePlatform}
+            onSetActivePlatform={setActivePlatform}
+            syncContent={syncContent}
+            onToggleSync={() => setSyncContent(!syncContent)}
+          />
 
-            {/* Tags Manager */}
-            <TagsManager selectedTags={selectedTags} onTagsChange={setSelectedTags} />
+          {/* Tags Manager */}
+          <TagsManager selectedTags={selectedTags} onTagsChange={setSelectedTags} />
 
-            {/* Post Editor */}
-            <PostEditor
-              content={currentContent}
-              onContentChange={updateContent}
-              activePlatform={activePlatform}
-              syncContent={syncContent}
-            />
-          </div>
-
-          {/* Right Panel - Preview */}
-          <PostPreview platform={activePlatform} content={currentContent} />
+          {/* Post Editor */}
+          <PostEditor
+            content={currentContent}
+            onContentChange={updateContent}
+            activePlatform={activePlatform}
+            syncContent={syncContent}
+          />
         </div>
+
+        {/* Right Panel - Preview */}
+        <PostPreview platform={activePlatform} content={currentContent} />
       </div>
-    </div>
+    </>
   )
 }

@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { usePageHeader } from "@/components/page-context"
+import { Clock } from "lucide-react"
 import { ScheduleHeader } from "@/components/schedule/schedule-header"
 import { ScheduleCalendar } from "@/components/schedule/schedule-calendar"
 import { ScheduleList } from "@/components/schedule/schedule-list"
@@ -29,6 +30,12 @@ export interface ScheduledPost {
 }
 
 export default function SchedulePage() {
+  usePageHeader({
+    title: "Schedule",
+    subtitle: "Manage your scheduled posts",
+    icon: Clock,
+  })
+
   const [viewMode, setViewMode] = useState<ViewMode>("calendar")
   const [calendarView, setCalendarView] = useState<CalendarView>("month")
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -36,55 +43,52 @@ export default function SchedulePage() {
   const [selectedStatuses, setSelectedStatuses] = useState<PostStatus[]>([])
 
   return (
-    <div className="flex h-screen bg-background overflow-hidden">
-      <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <ScheduleHeader
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
-          calendarView={calendarView}
-          onCalendarViewChange={setCalendarView}
-          currentDate={currentDate}
-          onDateChange={setCurrentDate}
+    <>
+      <ScheduleHeader
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        calendarView={calendarView}
+        onCalendarViewChange={setCalendarView}
+        currentDate={currentDate}
+        onDateChange={setCurrentDate}
+      />
+
+      <div className="flex-1 flex overflow-hidden">
+        {/* Filters Sidebar */}
+        <ScheduleFilters
+          selectedPlatforms={selectedPlatforms}
+          onPlatformsChange={setSelectedPlatforms}
+          selectedStatuses={selectedStatuses}
+          onStatusesChange={setSelectedStatuses}
         />
 
-        <div className="flex-1 flex overflow-hidden">
-          {/* Filters Sidebar */}
-          <ScheduleFilters
-            selectedPlatforms={selectedPlatforms}
-            onPlatformsChange={setSelectedPlatforms}
-            selectedStatuses={selectedStatuses}
-            onStatusesChange={setSelectedStatuses}
-          />
-
-          {/* Main Content */}
-          <main className="flex-1 p-5 lg:p-6 overflow-y-auto">
-            {viewMode === "calendar" && (
-              <ScheduleCalendar
-                view={calendarView}
-                currentDate={currentDate}
-                onDateChange={setCurrentDate}
-                selectedPlatforms={selectedPlatforms}
-                selectedStatuses={selectedStatuses}
-              />
-            )}
-            {viewMode === "list" && (
-              <ScheduleList
-                currentDate={currentDate}
-                selectedPlatforms={selectedPlatforms}
-                selectedStatuses={selectedStatuses}
-              />
-            )}
-            {viewMode === "timeline" && (
-              <ScheduleTimeline
-                currentDate={currentDate}
-                selectedPlatforms={selectedPlatforms}
-                selectedStatuses={selectedStatuses}
-              />
-            )}
-          </main>
-        </div>
+        {/* Main Content */}
+        <main className="flex-1 p-5 lg:p-6 overflow-y-auto">
+          {viewMode === "calendar" && (
+            <ScheduleCalendar
+              view={calendarView}
+              currentDate={currentDate}
+              onDateChange={setCurrentDate}
+              selectedPlatforms={selectedPlatforms}
+              selectedStatuses={selectedStatuses}
+            />
+          )}
+          {viewMode === "list" && (
+            <ScheduleList
+              currentDate={currentDate}
+              selectedPlatforms={selectedPlatforms}
+              selectedStatuses={selectedStatuses}
+            />
+          )}
+          {viewMode === "timeline" && (
+            <ScheduleTimeline
+              currentDate={currentDate}
+              selectedPlatforms={selectedPlatforms}
+              selectedStatuses={selectedStatuses}
+            />
+          )}
+        </main>
       </div>
-    </div>
+    </>
   )
 }

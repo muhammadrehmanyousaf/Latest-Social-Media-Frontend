@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { usePageHeader } from "@/components/page-context"
+import { CreditCard } from "lucide-react"
 import { BillingHeader } from "@/components/billing/billing-header"
 import { PricingCards } from "@/components/billing/pricing-cards"
 import { CurrentPlan } from "@/components/billing/current-plan"
@@ -255,6 +256,12 @@ const mockUsage: Usage = {
 }
 
 export default function BillingPage() {
+  usePageHeader({
+    title: "Billing",
+    subtitle: "Manage your subscription",
+    icon: CreditCard,
+  });
+
   const [activeTab, setActiveTab] = useState<ViewTab>("plans")
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly")
   const [subscription, setSubscription] = useState<Subscription>(mockSubscription)
@@ -326,17 +333,15 @@ export default function BillingPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      <main className="flex-1 flex flex-col min-w-0">
-        <BillingHeader
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          currentPlan={currentPlan}
-          subscription={subscription}
-        />
+    <div className="flex-1 flex flex-col overflow-hidden">
+      <BillingHeader
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        currentPlan={currentPlan}
+        subscription={subscription}
+      />
 
-        <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto">
           {activeTab === "plans" && (
             <div className="p-4 lg:p-6">
               <PricingCards
@@ -393,8 +398,7 @@ export default function BillingPage() {
               />
             </div>
           )}
-        </div>
-      </main>
+      </div>
     </div>
   )
 }

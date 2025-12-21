@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useCallback, useMemo } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { usePageHeader } from "@/components/page-context"
+import { Share2 } from "lucide-react"
 import { ChannelsHeader } from "@/components/channels/channels-header"
 import { ChannelsGrid } from "@/components/channels/channels-grid"
 import { ChannelDetails } from "@/components/channels/channel-details"
@@ -381,6 +382,12 @@ export type ViewMode = "grid" | "list"
 export type FilterStatus = "all" | "connected" | "issues"
 
 export default function ChannelsPage() {
+  usePageHeader({
+    title: "Channels",
+    icon: Share2,
+    subtitle: "Manage your social media connections",
+  })
+
   const [channels, setChannels] = useState<Channel[]>(mockChannels)
   const [groups] = useState<ChannelGroup[]>(mockGroups)
   const [viewMode, setViewMode] = useState<ViewMode>("grid")
@@ -535,10 +542,8 @@ export default function ChannelsPage() {
   }, [])
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      <main className="flex-1 flex flex-col min-w-0">
-        <ChannelsHeader
+    <main className="flex-1 flex flex-col min-w-0">
+      <ChannelsHeader
           viewMode={viewMode}
           onViewModeChange={setViewMode}
           searchQuery={searchQuery}
@@ -597,7 +602,6 @@ export default function ChannelsPage() {
             }}
           />
         )}
-      </main>
-    </div>
+    </main>
   )
 }

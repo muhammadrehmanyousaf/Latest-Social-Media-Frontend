@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useCallback, useMemo } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { usePageHeader } from "@/components/page-context"
+import { LayoutTemplate } from "lucide-react"
 import { TemplatesHeader } from "@/components/templates/templates-header"
 import { TemplateCategories } from "@/components/templates/template-categories"
 import { TemplateGallery } from "@/components/templates/template-gallery"
@@ -335,6 +336,12 @@ const mockCollections: Collection[] = [
 ]
 
 export default function TemplatesPage() {
+  usePageHeader({
+    title: "Templates",
+    subtitle: "Create and manage templates",
+    icon: LayoutTemplate,
+  })
+
   const [templates, setTemplates] = useState<Template[]>(mockTemplates)
   const [collections] = useState<Collection[]>(mockCollections)
   const [searchQuery, setSearchQuery] = useState("")
@@ -467,9 +474,7 @@ export default function TemplatesPage() {
   const customCount = templates.filter((t) => t.isCustom).length
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      <main className="flex-1 flex flex-col min-w-0">
+    <div className="flex-1 flex flex-col min-w-0">
         <TemplatesHeader
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -538,7 +543,6 @@ export default function TemplatesPage() {
             }}
           />
         )}
-      </main>
     </div>
   )
 }

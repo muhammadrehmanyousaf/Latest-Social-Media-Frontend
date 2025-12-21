@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { usePageHeader } from "@/components/page-context"
+import { Briefcase } from "lucide-react"
 import { WorkspacesHeader } from "@/components/workspaces/workspaces-header"
 import { WorkspacesGrid } from "@/components/workspaces/workspaces-grid"
 import { WorkspaceDetails } from "@/components/workspaces/workspace-details"
@@ -183,6 +184,12 @@ const mockWorkspaces: Workspace[] = [
 ]
 
 export default function WorkspacesPage() {
+  usePageHeader({
+    title: "Workspaces",
+    subtitle: "Organize your accounts",
+    icon: Briefcase,
+  })
+
   const [workspaces, setWorkspaces] = useState<Workspace[]>(mockWorkspaces)
   const [subscriptionLimits] = useState<SubscriptionLimits>(mockSubscriptionLimits)
   const [viewMode, setViewMode] = useState<ViewMode>("grid")
@@ -284,9 +291,7 @@ export default function WorkspacesPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-      <main className="flex-1 flex flex-col min-w-0">
+    <div className="flex-1 flex flex-col min-w-0">
         <WorkspacesHeader
           viewMode={viewMode}
           onViewModeChange={setViewMode}
@@ -313,7 +318,6 @@ export default function WorkspacesPage() {
             onArchiveClick={handleWorkspaceArchive}
           />
         </div>
-      </main>
 
       {/* Workspace Details Modal */}
       {selectedWorkspace && !showSettingsModal && (
